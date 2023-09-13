@@ -12,7 +12,7 @@ class Rotor:
     # rotor is offset from the origin
     subs: dict
 
-    def __init__(self, cipher_alphabet: str, notches: str, num_notches: int) -> None:
+    def __init__(self, cipher_alphabet: str, notches: str, num_notches: int):
         """A rotor for the enigma machine."""
         assert len(notches) == num_notches
         self.notch_letter = notch_letter
@@ -35,12 +35,18 @@ class Rotor:
         """Change previous output letter to current input letter
         according to difference in rotor positions."""
         letter_int = ord(letter)
+        # TODO confirm the direction of shifting in the enigma
         letter_int += (self.position - prev_rotor_pos)
         # if the alphabet has been exceeded, subtract 26
         if letter_int > 122:
             letter_int -= 26
         # return the char associated with the ascii int
         return chr(letter_int)
+
+    def set_position(self, zero_letter: str) -> None:
+        """Set the rotor's position according to a zero letter."""
+        letter_index = list(self.subs.keys()).index(zero_letter)
+        self.position = letter_index
 
     def shift(self, num_digits: int=1) -> None:
         """Shift the rotor by num_digits."""
