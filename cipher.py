@@ -7,16 +7,17 @@ class Rotor:
     in relation to the ascii alphabet."""
     notches: str
     num_notches: int
-    position: int # NEED TO IMPLEMENT POSITIONAL BEHAVIOR
+    position: int
     # position is an int, the number of places the
     # rotor is offset from the origin
     subs: dict
 
-    def __init__(self, cipher_alphabet: str, notches: str, num_notches: int):
+    def __init__(self, cipher_alphabet: str, notches: str, num_notches: int, position: int):
         """A rotor for the enigma machine."""
         assert len(notches) == num_notches
         self.notch_letter = notch_letter
         self.num_notches = num_notches
+        self.position = position
 
         alphabet = string.ascii_lowercase
         cipher_alphabet = cipher_alphabet.lower()
@@ -92,9 +93,26 @@ class Plugboard:
 
     
 class Enigma:
-    """The Enigma machine."""
+    """The Enigma machine.
+    
+    Order of encoding/decoding:
+    * input value
+    * plugboard
+    * rotor
+    * rotor
+    * reflector
+    * rotor
+    * rotor
+    * plugboard
+    * output value"""
+
     ref: Reflector
+    rots: List[Rotor]
     pb: Plugboard
+
+    def __init__(self, plugboard=True, num_rots=3):
+        pass
+
     
     
     
